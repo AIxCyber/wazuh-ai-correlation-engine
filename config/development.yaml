@@ -1,0 +1,21 @@
+app:
+  debug: true
+  log_level: DEBUG
+  log_format: text
+
+database:
+  url: sqlite:///data/wazuh_correlator.db
+
+ingestion:
+  alert_file_path: data/alerts/
+
+enrichment:
+  enable_cache: true
+  cache_ttl_seconds: 300
+
+ai:
+  mode: rule
+
+api:
+  jwt_secret: dev-secret-key-do-not-use-in-production
+  rate_limit_per_minute: 1000

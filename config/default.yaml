@@ -1,0 +1,112 @@
+# Wazuh AI Correlation Engine - Default Configuration
+# Override with environment variables or config/development.yaml / config/production.yaml
+
+app:
+  name: wazuh-ai-correlation-engine
+  debug: false
+  log_level: INFO
+  log_format: json
+
+database:
+  url: sqlite:///data/wazuh_correlator.db
+  pool_size: 5
+  max_overflow: 10
+
+ingestion:
+  source: local
+  alert_file_path: data/alerts/
+  batch_size: 100
+  poll_interval_seconds: 30
+  retry_max_attempts: 3
+  retry_base_delay: 1.0
+  retry_max_delay: 30.0
+  wazuh_api_url: ""
+  wazuh_api_user: ""
+  wazuh_api_password: ""
+  wazuh_indexer_url: ""
+  wazuh_indexer_user: ""
+  wazuh_indexer_password: ""
+  wazuh_indexer_index: "wazuh-alerts-*"
+  elasticsearch_url: ""
+  elasticsearch_api_key: ""
+  elasticsearch_index: "wazuh-alerts-*"
+  kafka_bootstrap_servers: ""
+  kafka_topic: "wazuh-alerts"
+  kafka_group_id: "wazuh-correlation-engine"
+  kafka_security_protocol: "PLAINTEXT"
+
+correlation:
+  window_minutes: 5
+  semantic_threshold: 0.85
+  rules:
+    - time_based
+    - asset_based
+    - user_based
+    - network_based
+    - rule_based
+    - semantic_based
+
+embedding:
+  model: sentence-transformers/all-MiniLM-L6-v2
+  dimension: 384
+
+enrichment:
+  enable_cache: true
+  cache_ttl_seconds: 3600
+  providers:
+    abuseipdb:
+      enabled: true
+      base_url: https://api.abuseipdb.com/api/v2
+    virustotal:
+      enabled: true
+      base_url: https://www.virustotal.com/api/v3
+    geoip:
+      enabled: true
+      database_path: data/geoip/GeoLite2-City.mmdb
+    asn:
+      enabled: true
+      database_path: data/geoip/GeoLite2-ASN.mmdb
+
+ai:
+  mode: rule
+  providers:
+    openai:
+      model: gpt-4
+      temperature: 0.3
+      max_tokens: 1000
+    ollama:
+      url: http://localhost:11434
+      model: llama3
+
+api:
+  host: 0.0.0.0
+  port: 8000
+  jwt_algorithm: HS256
+  jwt_expire_minutes: 60
+  rate_limit_per_minute: 100
+  rate_limit_burst: 200
+  cors_origins:
+    - http://localhost:8501
+    - http://localhost:3000
+
+dashboard:
+  host: 0.0.0.0
+  port: 8501
+  page_title: "SOC Dashboard - Wazuh AI Correlation Engine"
+  theme: dark
+
+retention:
+  alerts_days: 90
+  incidents_days: 365
+  audit_logs_days: 365
+  webhook_logs_days: 30
+  cleanup_interval_hours: 24
+
+reporting:
+  output_dir: data/reports/
+  pdf_stylesheet: src/reporting/styles/report.css
+
+webhooks:
+  max_retries: 3
+  retry_base_delay: 5.0
+  timeout_seconds: 30

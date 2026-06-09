@@ -1,0 +1,43 @@
+app:
+  debug: false
+  log_level: INFO
+  log_format: json
+
+database:
+  url: postgresql://user:password@postgres:5432/wazuh_correlator
+  pool_size: 20
+  max_overflow: 30
+
+ingestion:
+  poll_interval_seconds: 10
+
+enrichment:
+  enable_cache: true
+  cache_ttl_seconds: 3600
+
+ai:
+  mode: openai
+  providers:
+    openai:
+      model: gpt-4
+
+api:
+  host: 0.0.0.0
+  port: 8000
+  rate_limit_per_minute: 100
+  rate_limit_burst: 200
+  rate_limit_admin: 200
+  rate_limit_senior_analyst: 150
+  rate_limit_analyst: 100
+  rate_limit_anonymous: 30
+
+dashboard:
+  host: 0.0.0.0
+  port: 8501
+
+retention:
+  alerts_days: 90
+  incidents_days: 365
+  audit_logs_days: 365
+  webhook_logs_days: 30
+  cleanup_interval_hours: 24

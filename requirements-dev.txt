@@ -1,0 +1,10 @@
+-r requirements.txt
+bcrypt>=4.0.0
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+pytest-cov>=4.1.0
+ruff>=0.1.0
+bandit>=1.7.6
+mypy>=1.8.0
+responses>=0.24.0
+factory-boy>=3.3.0

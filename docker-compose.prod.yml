@@ -1,0 +1,61 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgresql://wazuh:wazuh_pass@postgres:5432/wazuh_correlator
+      - APP_ENV=production
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8000/api/v1/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dashboard
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    environment:
+      - API_HOST=api
+      - API_PORT=8000
+      - DASHBOARD_API_BASE=http://api:8000/api/v1
+    depends_on:
+      api:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: wazuh
+      POSTGRES_PASSWORD: wazuh_pass
+      POSTGRES_DB: wazuh_correlator
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wazuh"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
