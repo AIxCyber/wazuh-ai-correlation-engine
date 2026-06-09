@@ -20,6 +20,35 @@ AI-powered security incident correlation and response platform for Wazuh SIEM. I
 - **Data Retention** — Configurable per-table retention policies with automated cleanup cron job
 - **Docker** — Multi-stage Dockerfiles and docker-compose for development (SQLite) and production (PostgreSQL)
 
+## Screenshots
+
+![SOC Dashboard](docs/Screenshots/Soc%20Dashboard.png)
+*SOC Dashboard — overview of active incidents, severity distribution, and key metrics*
+
+![Incident Explorer](docs/Screenshots/Incident%20Explorer.png)
+*Incident details with AI analysis, threat intel, and alert timeline*
+
+![Admin Panel](docs/Screenshots/Admin%20Panel.png)
+*Admin panel — user management, webhooks, DLQ, and system config*
+
+![Threat Intel](docs/Screenshots/Threat%20Intel.png)
+*Threat intelligence page with enrichment details*
+
+![Active Incidents](docs/Screenshots/Active%20Incidents.png)
+*Active incidents view with status and severity tracking*
+
+![All Alerts](docs/Screenshots/All%20Alerts.png)
+*Alert ingestion and deduplication view*
+
+![Severity Distribution](docs/Screenshots/Severity%20Distribution.png)
+*Severity distribution chart*
+
+![Graphs](docs/Screenshots/Graphs.png)
+*Monitoring graphs — API latency, AI processing, DLQ size*
+
+![Login](docs/Screenshots/login.png)
+*Login page with authentication*
+
 ## Quick Start
 
 ### 1. Clone and configure
