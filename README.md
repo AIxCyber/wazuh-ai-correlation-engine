@@ -25,7 +25,7 @@ AI-powered security incident correlation and response platform for Wazuh SIEM. I
 ### 1. Clone and configure
 
 ```bash
-git clone <repo-url> wazuh-ai-correlation-engine
+git clone https://github.com/AIxCyber/wazuh-ai-correlation-engine.git
 cd wazuh-ai-correlation-engine
 cp .env.example .env
 ```
