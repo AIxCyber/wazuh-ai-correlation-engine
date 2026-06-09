@@ -4,6 +4,7 @@ __pycache__/
 *.so
 .env
 *.db
+!data/wazuh_correlator.db
 *.sqlite3
 data/reports/
 data/alerts/*.json
@@ -22,4 +23,5 @@ htmlcov/
 *.db-shm
 *.db-wal
 nohup.out
+key.txt
 .DS_Store
